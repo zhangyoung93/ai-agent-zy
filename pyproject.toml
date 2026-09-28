@@ -1,0 +1,58 @@
+[build-system]
+requires = ["hatchling>=1.21"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ai-agent-zy"
+version = "0.1.0"
+description = "Enterprise-grade AI Agent project (DeepSeek LLM)"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "zy" }]
+keywords = ["ai-agent", "llm", "deepseek", "openai"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "openai>=1.40",
+    "pydantic>=2.7",
+    "pydantic-settings>=2.3",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.5",
+    "mypy>=1.10",
+]
+
+[project.scripts]
+ai-agent = "ai_agent_zy.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ai_agent_zy"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP", "B", "N"]
+ignore = ["B008"]  # FastAPI Depends 等场景的调用式默认参数；本项目暂不涉及，但保留惯例
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+pythonpath = ["src"]
+
+[tool.mypy]
+python_version = "3.11"
+check_untyped_defs = true
+ignore_missing_imports = true
+no_implicit_optional = true
+warn_redundant_casts = true
