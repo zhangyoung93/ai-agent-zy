@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example</groupId>
+    <artifactId>agent-zy-java-example</artifactId>
+    <version>0.1.0</version>
+    <packaging>jar</packaging>
+
+    <name>agent-zy-java-example</name>
+    <description>Java 调用 DeepSeek LLM 的可运行示例（LangChain4j）</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>17</maven.compiler.release>
+        <langchain4j.version>1.20.1</langchain4j.version>
+        <exec-maven-plugin.version>3.2.0</exec-maven-plugin.version>
+        <!-- 默认运行的示例：可用 -Dexec.mainClass=... 覆盖 -->
+        <exec.mainClass>com.example.agentzy.HelloDeepSeek</exec.mainClass>
+    </properties>
+
+    <dependencies>
+        <!-- LangChain4j 的 OpenAI 集成：DeepSeek 兼容 OpenAI 协议，改 baseUrl 即可 -->
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-open-ai</artifactId>
+            <version>${langchain4j.version}</version>
+        </dependency>
+
+        <!-- LangChain4j 核心：AiServices / @UserMessage 等声明式 API -->
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j</artifactId>
+            <version>${langchain4j.version}</version>
+        </dependency>
+
+        <!-- 日志实现（LangChain4j 请求/响应日志走 slf4j） -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.17</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>${exec-maven-plugin.version}</version>
+                <configuration>
+                    <mainClass>${exec.mainClass}</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <!-- 运行第二个示例：mvn exec:java -Ptool -->
+        <profile>
+            <id>tool</id>
+            <properties>
+                <exec.mainClass>com.example.agentzy.ToolCallingExample</exec.mainClass>
+            </properties>
+        </profile>
+    </profiles>
+</project>

@@ -29,6 +29,12 @@ coverage.xml
 *.iml
 *.swp
 
+# ===== Java / Maven =====
+target/
+*.class
+.m2/
+.tools/
+
 # ===== 临时文件 =====
 .tmp/
 tmp*/
