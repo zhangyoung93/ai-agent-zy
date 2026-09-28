@@ -10,9 +10,10 @@ dist/
 venv/
 env/
 
-# ===== 密钥（绝对不能提交）=====
+# ===== 密钥=====
 .env
 .env.*
+!.env.example
 
 # ===== 测试 / 缓存 =====
 .pytest_cache/
@@ -31,6 +32,7 @@ coverage.xml
 # ===== 临时文件 =====
 .tmp/
 tmp*/
+pytest-cache-files-*/
 *.log
 
 # ===== 系统 =====
